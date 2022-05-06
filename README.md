@@ -1,5 +1,5 @@
 # Generate 3D world
-This project shows how to use the Stone engine to generate a 3D world
+This project shows how to use the Stone Engine to generate a 3D world
 
 ## How to build
 
@@ -16,3 +16,9 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=path to/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=your 
 
 cmake --build ./ --config Release --target Generate3DWorld -j 10
 ```
+
+## Reference
+[SimonDev's 3Dworld Generation playlist](https://www.youtube.com/watch?v=hHGshzIXFWY&list=PLRL3Z3lpLmH3PNGZuDNf2WXnLTHpN9hXy&index=1&ab_channel=SimonDev)
+
+
+[SimonDev's 3Dworld Generation source code](https://github.com/simondevyoutube/ProceduralTerrain_Part1)
