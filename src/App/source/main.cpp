@@ -1,7 +1,9 @@
-#include <iostream>
-#include "Core/test.h"
+#include <Engine.h>
+#include <Editor.h>
 int main(int argc, char *argv[])
 {
-    test();
-    std::cout << "hello world!" << std::endl;
+    Stone::PublicSingleton<Stone::Engine>::getInstance().startEngine(argc, argv);
+    Stone::PublicSingleton<Stone::Editor>::getInstance().initialize(argc, argv);
+    Stone::PublicSingleton<Stone::Editor>::getInstance().run();
+    Stone::PublicSingleton<Stone::Engine>::getInstance().shutdownEngine();
 }
