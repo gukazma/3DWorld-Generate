@@ -1,6 +1,7 @@
 {
     "cmake.configureOnEdit": false,
     "cmake.configureArgs": [
-        "-DCMAKE_TOOLCHAIN_FILE=E:/softwares/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        "-DCMAKE_TOOLCHAIN_FILE=E:/softwares/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "-DVCPKG_TARGET_TRIPLET=x64-windows",
     ],
-}
+}   

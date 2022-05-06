@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 
-project(AppName VERSION 0.1.0)
+project(Generate3DWorld VERSION 0.1.0)
 
 # just for qt
 # set(CMAKE_AUTOUIC ON)
