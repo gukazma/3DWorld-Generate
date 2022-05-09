@@ -4,6 +4,7 @@
 #include <Core/Base/macro.h>
 #include <Engine.h>
 #include <Function/Render/Interface/Renderer.h>
+#include <Function/Render/Interface/Shader.h>
 #include <Function/Event/EventSystem.h>
 #include <Function/Scene/EditCamera.h>
 #include <qelapsedtimer.h>
@@ -12,9 +13,15 @@
 #include <imgui.h>
 #include <ImGuizmo.h>
 #include <Function/Scene/Light.h>
+#include <Function/Scene/Material.h>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <Terrain/NoiseTerrain.h>
+#include <Resource/Components/Transform.h>
 namespace Stone
 {
+    NoiseTerrain* noiset = new NoiseTerrain(12345, 100, 100, 30);
+    TransformComponent* transformcomponent;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f)), m_MouseAngle(std::make_shared<MouseAngle>(0.0f, 0.0f))
 	{}
@@ -27,6 +34,8 @@ namespace Stone
         PublicSingleton<Engine>::getInstance().renderInitialize();
         PublicSingleton<Engine>::getInstance().logicalInitialize();
         QtImGui::initialize(this);
+        transformcomponent = new TransformComponent();
+        transformcomponent->Scale = { 0.1, 0.1, 0.1 };
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -40,7 +49,20 @@ namespace Stone
         QElapsedTimer timer;
         timer.start();
         PublicSingleton<Engine>::getInstance().logicalTick();
-        PublicSingleton<Engine>::getInstance().renderTick(defaultFramebufferObject());
+        PublicSingleton<Renderer>::getInstance().begin();
+
+        PublicSingleton<EditorCamera>::getInstance().bind();
+        PublicSingletonInstance(GLobalLight).bind(1);
+        PublicSingletonInstance(MaterialPool).getMaterial("BasicMaterial")->bind(2);
+        //PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
+        PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
+        //PublicSingleton<ShaderPool>::getInstance().get(m_Shader)->bind();
+        //_texture->bind(0);
+        transformcomponent->bind(2);
+
+        PublicSingletonInstance(Renderer).render(noiset);
+
+        PublicSingleton<Renderer>::getInstance().end(defaultFramebufferObject());
         renderImGui();
         update();
         PublicSingleton<Engine>::getInstance().DeltaTime = timer.nsecsElapsed()* 1.0e-9f;
