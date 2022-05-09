@@ -6,6 +6,7 @@
 namespace Stone
 {
 	NoiseTerrain::NoiseTerrain(uint32_t seed, uint32_t bottomwidth, uint32_t bottomheight, uint32_t heightmax)
+        : m_MaxHeight(heightmax)
 	{
 		m_HeightMap = std::vector<std::vector<float>>(bottomwidth, std::vector<float>(bottomheight, 0));
 
@@ -32,10 +33,10 @@ namespace Stone
                 float UR = (float)(m_HeightMap[i][j + 1]); // Upper right
                 float LR = (float)(m_HeightMap[i + 1][j + 1]); // Lower right
 
-                glm::vec3 ULV = { i , UL * heightmax , j };
-                glm::vec3 LLV = { i + 1, LL * heightmax , j };
-                glm::vec3 URV = { i, UR * heightmax , j + 1 };
-                glm::vec3 LRV = { i + 1, LR * heightmax , j + 1 };
+                glm::vec3 ULV = { i , UL * m_MaxHeight , j };
+                glm::vec3 LLV = { i + 1, LL * m_MaxHeight , j };
+                glm::vec3 URV = { i, UR * m_MaxHeight , j + 1 };
+                glm::vec3 LRV = { i + 1, LR * m_MaxHeight , j + 1 };
 
                 vertices.push_back(vcg::Point3f(ULV.x, ULV.y, ULV.z));
                 vertices.push_back(vcg::Point3f(LLV.x, LLV.y, LLV.z));
@@ -56,4 +57,15 @@ namespace Stone
 
         update();
 	}
+    void NoiseTerrain::setMaxHeight(float maxheight)
+    {
+        for (auto& v : m_Mesh.vert)
+        {
+            v.P().Y() = v.P().Y() / m_MaxHeight * maxheight;
+        }
+
+        m_MaxHeight = maxheight;
+        update();
+        updateBuffer();
+    }
 }

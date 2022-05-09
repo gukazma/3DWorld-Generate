@@ -20,7 +20,9 @@
 #include <Resource/Components/Transform.h>
 namespace Stone
 {
-    NoiseTerrain* noiset = new NoiseTerrain(12345, 100, 100, 30);
+    static float maxheight = 10;
+    static float lastheight = maxheight;
+    NoiseTerrain* noiset = new NoiseTerrain(12345, 100, 100, maxheight);
     TransformComponent* transformcomponent;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f)), m_MouseAngle(std::make_shared<MouseAngle>(0.0f, 0.0f))
@@ -138,8 +140,15 @@ namespace Stone
         glm::mat4 testMatrix = glm::mat4(1);
         ImGuizmo::ViewManipulate(glm::value_ptr(view), 8.f, ImVec2(x + width - width * 0.1, 0), ImVec2(width * 0.1, width * 0.1), 0x10101010);
         PublicSingletonInstance(EditorCamera).updateBuffer();
-        ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(proj), ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(testMatrix));
-        ImGui::Text("Hello");
+        //ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(proj), ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(testMatrix));
+        
+        ImGui::DragFloat("maxheight", &maxheight, 1, 1, 100);
+        if (lastheight != maxheight)
+        {
+            std::cout << "maxheight" << maxheight << std::endl;
+            noiset->setMaxHeight(maxheight);
+        }
+        lastheight = maxheight;
         float aaa = 0.0f;
         ImGui::DragFloat3("Light Pos", (float*)&(PublicSingletonInstance(GLobalLight).m_BlockData.Position));
         PublicSingletonInstance(GLobalLight).updateBuffer();
