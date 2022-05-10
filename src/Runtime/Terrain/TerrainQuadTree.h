@@ -20,10 +20,13 @@ namespace Stone
 
 		void insert(const glm::vec3& pos);
 
+		void getLeavesNode(std::vector<Node>& target);
+
+	private:
+
+		void getLeavesNode(Node& child, std::vector<Node>& target);
 		void insert(Node& child, const glm::vec3& pos);
-
 		void createChild(Node& child);
-
 		Node m_Root;
 	};
 }

@@ -44,13 +44,10 @@ namespace Stone
 
         TerrainQuadTree tree(glm::vec3(-3600, 0, -3600), glm::vec3(3600, 0, 3600));
         tree.insert(glm::vec3(0));
-        for (auto c : tree.m_Root.children)
-        {
-            for (auto cc : c.children)
-            {
-                LOG_INFO("child size {0}", cc.children.size());
-            }
-        }
+
+        std::vector<TerrainQuadTree::Node> target;
+        tree.getLeavesNode(target);
+        LOG_INFO("target size: {0}", target.size());
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

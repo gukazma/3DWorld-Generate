@@ -15,6 +15,19 @@ namespace Stone
 		insert(m_Root, pos);
 	}
 
+	void TerrainQuadTree::getLeavesNode(Node& child, std::vector<Node>& target)
+	{
+		if (child.children.size() == 0)
+		{
+			target.push_back(child);
+		}
+
+		for (auto c : child.children)
+		{
+			getLeavesNode(c, target);
+		}
+	}
+
 	void TerrainQuadTree::insert(Node& child, const glm::vec3& pos)
 	{
 		float distanceToChild = glm::dot(child.center - pos, child.center - pos);
@@ -27,6 +40,11 @@ namespace Stone
 				insert(c, pos);
 			}
 		}
+	}
+
+	void TerrainQuadTree::getLeavesNode(std::vector<Node>& target)
+	{
+		getLeavesNode(m_Root, target);
 	}
 
 	void TerrainQuadTree::createChild(Node& child)
