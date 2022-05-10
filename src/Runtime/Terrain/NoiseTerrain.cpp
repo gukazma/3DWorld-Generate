@@ -57,6 +57,41 @@ namespace Stone
 
         update();
 	}
+    NoiseTerrain::NoiseTerrain(uint32_t seed, const TerrainQuadTree::Node& node)
+    {
+        const siv::PerlinNoise perlin{ seed };
+        std::vector<vcg::Point3f> vertices;
+        std::vector<vcg::Point3i> indices;
+        float xstep = node.size.x / 100.0f;
+        float zstep = node.size.y / 100.0f;
+        for (float i = node.bondsMin.x; i < node.bondsMax.x; i+= xstep)
+        {
+            for (float j = node.bondsMin.z; j < node.bondsMax.z; j += zstep)
+            {
+                
+                float UL = (2 * perlin.octave2D_01((i * 0.01), (j * 0.01), 4) - 1); // Upper left
+
+                float LL = (2 * perlin.octave2D_01(((i + xstep) * 0.01), (j * 0.01), 4) - 1); // Lower left
+                float UR = (2 * perlin.octave2D_01((i * 0.01), ((j + zstep) * 0.01), 4) - 1); // Upper right
+                float LR = (2 * perlin.octave2D_01(((i + xstep) * 0.01), ((j + zstep) * 0.01), 4) - 1); // Lower right
+
+                glm::vec3 ULV = { i , UL * m_MaxHeight , j };
+                glm::vec3 LLV = { i + xstep, LL * m_MaxHeight , j };
+                glm::vec3 URV = { i, UR * m_MaxHeight , j + zstep };
+                glm::vec3 LRV = { i + xstep, LR * m_MaxHeight , j + zstep };
+
+                vertices.push_back(vcg::Point3f(ULV.x, ULV.y, ULV.z));
+                vertices.push_back(vcg::Point3f(LLV.x, LLV.y, LLV.z));
+                vertices.push_back(vcg::Point3f(URV.x, URV.y, URV.z));
+                vertices.push_back(vcg::Point3f(LRV.x, LRV.y, LRV.z));
+                indices.push_back(vcg::Point3i(vertices.size() - 4, vertices.size() - 1, vertices.size() - 2));
+                indices.push_back(vcg::Point3i(vertices.size() - 4, vertices.size() - 3, vertices.size() - 1));
+            }
+        }
+        vcg::tri::BuildMeshFromCoordVectorIndexVector(m_Mesh, vertices, indices);
+
+        update();
+    }
     void NoiseTerrain::setMaxHeight(float maxheight)
     {
         for (auto& v : m_Mesh.vert)

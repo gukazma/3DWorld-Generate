@@ -20,12 +20,13 @@
 #include <Resource/Components/Transform.h>
 
 #include "Terrain/TerrainQuadTree.h"
-
+#include "Terrain/TerrainManager.h"
 namespace Stone
 {
     static float maxheight = 10;
     static float lastheight = maxheight;
     NoiseTerrain* noiset = new NoiseTerrain(12345, 100, 100, maxheight);
+    std::vector<NoiseTerrain*> target;
     TransformComponent* transformcomponent;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f)), m_MouseAngle(std::make_shared<MouseAngle>(0.0f, 0.0f))
@@ -42,12 +43,8 @@ namespace Stone
         transformcomponent = new TransformComponent();
         transformcomponent->Scale = { 0.1, 0.1, 0.1 };
 
-        TerrainQuadTree tree(glm::vec3(-3600, 0, -3600), glm::vec3(3600, 0, 3600));
-        tree.insert(glm::vec3(0));
-
-        std::vector<TerrainQuadTree::Node> target;
-        tree.getLeavesNode(target);
-        LOG_INFO("target size: {0}", target.size());
+        PublicSingletonInstance(TerrainManager).getTerrain({ 0, 0,0 }, target, { 0, 0, 0 }, { 360, 0, 360 });
+        LOG_INFO("target size {0}", target.size());
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -71,8 +68,10 @@ namespace Stone
         //PublicSingleton<ShaderPool>::getInstance().get(m_Shader)->bind();
         //_texture->bind(0);
         transformcomponent->bind(2);
-
-        PublicSingletonInstance(Renderer).render(noiset);
+        for (auto t : target)
+        {
+            PublicSingletonInstance(Renderer).render(t);
+        }
 
         PublicSingleton<Renderer>::getInstance().end(defaultFramebufferObject());
         renderImGui();

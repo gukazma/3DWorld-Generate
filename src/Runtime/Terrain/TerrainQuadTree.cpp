@@ -2,7 +2,7 @@
 #include <iostream>
 namespace Stone
 {
-#define MIN_NODE_SIZE 500
+#define MIN_NODE_SIZE 10
 	TerrainQuadTree::TerrainQuadTree(const glm::vec3& min, const glm::vec3& max)
 	{
 		m_Root.bondsMin = min;
