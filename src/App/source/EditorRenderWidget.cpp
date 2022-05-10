@@ -18,6 +18,9 @@
 
 #include <Terrain/NoiseTerrain.h>
 #include <Resource/Components/Transform.h>
+
+#include "Terrain/TerrainQuadTree.h"
+
 namespace Stone
 {
     static float maxheight = 10;
@@ -38,6 +41,16 @@ namespace Stone
         QtImGui::initialize(this);
         transformcomponent = new TransformComponent();
         transformcomponent->Scale = { 0.1, 0.1, 0.1 };
+
+        TerrainQuadTree tree(glm::vec3(-3600, 0, -3600), glm::vec3(3600, 0, 3600));
+        tree.insert(glm::vec3(0));
+        for (auto c : tree.m_Root.children)
+        {
+            for (auto cc : c.children)
+            {
+                LOG_INFO("child size {0}", cc.children.size());
+            }
+        }
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
