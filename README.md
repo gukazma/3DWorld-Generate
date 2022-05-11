@@ -23,6 +23,12 @@ you can see commit hashid ``64d5c134bd5e9208d7f690e7c541933e313f403b``
 
 ![setmaxheight](docs/imgs/setheightmax.gif)
 
+## T2 QuadLod
+[中文文档Chinese documents](docs/QuadLOD/README.md)
+
+![lod](docs/imgs/lod.gif)
+
+
 ## Reference
 [SimonDev's 3Dworld Generation playlist](https://www.youtube.com/watch?v=hHGshzIXFWY&list=PLRL3Z3lpLmH3PNGZuDNf2WXnLTHpN9hXy&index=1&ab_channel=SimonDev)
 
