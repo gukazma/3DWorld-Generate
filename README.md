@@ -26,6 +26,8 @@ you can see commit hashid ``64d5c134bd5e9208d7f690e7c541933e313f403b``
 ## T2 QuadLod
 [中文文档Chinese documents](docs/QuadLOD/README.md)
 
+you can see commit hashid `0b2dd6b988436a168b487e58c17729e9421c4e42`
+
 ![lod](docs/imgs/lod.gif)
 
 
