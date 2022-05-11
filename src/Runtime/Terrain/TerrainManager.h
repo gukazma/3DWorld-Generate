@@ -8,7 +8,7 @@ namespace Stone
 	class TerrainManager : public PublicSingleton<TerrainManager>
 	{
 	public:
-		void getTerrain(glm::vec3 camerapos, std::vector<NoiseTerrain*>& target, glm::vec3 min, glm::vec3 max);
+		void getTerrain(const glm::vec3& camerapos, std::vector<NoiseTerrain*>& target, glm::vec3 min, glm::vec3 max);
 		
 	};
 }

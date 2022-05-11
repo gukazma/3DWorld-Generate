@@ -27,6 +27,7 @@ namespace Stone
     static float lastheight = maxheight;
     NoiseTerrain* noiset = new NoiseTerrain(12345, 100, 100, maxheight);
     std::vector<NoiseTerrain*> target;
+    glm::vec3 camerapos = glm::vec3(0);
     TransformComponent* transformcomponent;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f)), m_MouseAngle(std::make_shared<MouseAngle>(0.0f, 0.0f))
@@ -43,7 +44,7 @@ namespace Stone
         transformcomponent = new TransformComponent();
         transformcomponent->Scale = { 0.1, 0.1, 0.1 };
 
-        PublicSingletonInstance(TerrainManager).getTerrain({ 0, 0,0 }, target, { 0, 0, 0 }, { 3600, 0, 3600 });
+        //PublicSingletonInstance(TerrainManager).getTerrain({ 0, 0,0 }, target, { 0, 0, 0 }, { 3600, 0, 3600 });
         
 	}
 
@@ -61,6 +62,9 @@ namespace Stone
         PublicSingleton<Renderer>::getInstance().begin();
 
         PublicSingleton<EditorCamera>::getInstance().bind();
+        //LOG_INFO("Editor Camear pos: {0} {1} {2}", PublicSingleton<EditorCamera>::getInstance().m_Pos.x, PublicSingleton<EditorCamera>::getInstance().m_Pos.y, PublicSingleton<EditorCamera>::getInstance().m_Pos.z);
+        //PublicSingletonInstance(TerrainManager).getTerrain(PublicSingleton<EditorCamera>::getInstance().m_Pos, target, { 0, 0, 0 }, { 400, 0, 400 });
+        PublicSingletonInstance(TerrainManager).getTerrain(camerapos, target, { 0, 0, 0 }, { 400, 0, 400 });
         PublicSingletonInstance(GLobalLight).bind(1);
         PublicSingletonInstance(MaterialPool).getMaterial("BasicMaterial")->bind(2);
         //PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
@@ -163,6 +167,7 @@ namespace Stone
         lastheight = maxheight;
         float aaa = 0.0f;
         ImGui::DragFloat3("Light Pos", (float*)&(PublicSingletonInstance(GLobalLight).m_BlockData.Position));
+        ImGui::DragFloat3("cmarapos", (float*)&camerapos);
         PublicSingletonInstance(GLobalLight).updateBuffer();
         ImGui::Render();
         QtImGui::render();
