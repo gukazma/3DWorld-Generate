@@ -76,6 +76,10 @@ namespace Stone
         {
             PublicSingletonInstance(Renderer).render(t);
         }
+        for (auto t : target)
+        {
+            PublicSingletonInstance(Renderer).renderLine(t);
+        }
 
         PublicSingleton<Renderer>::getInstance().end(defaultFramebufferObject());
         renderImGui();
