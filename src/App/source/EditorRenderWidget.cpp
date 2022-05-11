@@ -44,7 +44,6 @@ namespace Stone
         transformcomponent->Scale = { 0.1, 0.1, 0.1 };
 
         PublicSingletonInstance(TerrainManager).getTerrain({ 0, 0,0 }, target, { 0, 0, 0 }, { 3600, 0, 3600 });
-        LOG_INFO("target size {0}", target.size());
         
 	}
 
