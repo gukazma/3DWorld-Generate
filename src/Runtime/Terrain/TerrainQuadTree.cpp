@@ -2,7 +2,7 @@
 #include <iostream>
 namespace Stone
 {
-#define MIN_NODE_SIZE 10
+#define MIN_NODE_SIZE 40
 	TerrainQuadTree::TerrainQuadTree(const glm::vec3& min, const glm::vec3& max)
 	{
 		m_Root.bondsMin = min;
@@ -21,10 +21,12 @@ namespace Stone
 		{
 			target.push_back(child);
 		}
-
-		for (auto c : child.children)
+		else
 		{
-			getLeavesNode(c, target);
+			for (auto c : child.children)
+			{
+				getLeavesNode(c, target);
+			}
 		}
 	}
 
@@ -58,7 +60,7 @@ namespace Stone
 
 		Node br;
 		br.bondsMin = { center.x, 0.0, child.bondsMin.z };
-		br.bondsMax = { child.bondsMin.x, 0.0,  center.z };
+		br.bondsMax = { child.bondsMax.x, 0.0,  center.z };
 		br.updateBox();
 
 

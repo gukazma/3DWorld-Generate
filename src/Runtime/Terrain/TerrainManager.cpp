@@ -14,6 +14,8 @@ namespace Stone
 		size_t count = 0;
 		for (auto t : terrainTarget)
 		{
+			LOG_INFO("bondsMin : {0} {1}", t.bondsMin.x, t.bondsMin.z);
+			LOG_INFO("bondsMax : {0} {1}", t.bondsMax.x, t.bondsMax.z);
 			target.push_back(new NoiseTerrain(123456, t));
 		}
 	}
