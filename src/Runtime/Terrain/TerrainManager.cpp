@@ -14,14 +14,9 @@ namespace Stone
 		std::vector<TerrainQuadTree::Node> terrainTarget;
 		tree.getLeavesNode(terrainTarget);
 		size_t count = 0;
-		LOG_INFO("camera pos {0} {1} {2}", camerapos.x, camerapos.y, camerapos.z);
 		for (auto t : terrainTarget)
 		{
 			PublicSingletonInstance(TerrainPool).getTerrain(t, target);
-		}
-		for (size_t i = 0; i < 3; i++)
-		{
-			LOG_INFO("#############################################################");
 		}
 	}
 }

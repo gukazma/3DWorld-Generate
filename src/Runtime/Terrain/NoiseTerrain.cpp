@@ -62,8 +62,8 @@ namespace Stone
         const siv::PerlinNoise perlin{ seed };
         std::vector<vcg::Point3f> vertices;
         std::vector<vcg::Point3i> indices;
-        float xstep = node.size.x / 20.0f;
-        float zstep = node.size.y / 20.0f;
+        float xstep = node.size.x / 50.0f;
+        float zstep = node.size.y / 50.0f;
         for (float i = node.bondsMin.x; i < node.bondsMax.x; i+= xstep)
         {
             for (float j = node.bondsMin.z; j < node.bondsMax.z; j += zstep)

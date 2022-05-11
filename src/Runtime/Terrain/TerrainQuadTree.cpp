@@ -35,7 +35,6 @@ namespace Stone
 	void TerrainQuadTree::insert(Node& child, const glm::vec3& pos)
 	{
 		float distanceToChild = glm::dot(child.center - pos, child.center - pos);
-		LOG_INFO("pos {0} {1} {2}", pos.x, pos.y, pos.z);
 		if (distanceToChild < child.size.x * child.size.x && child.size.x > MIN_NODE_SIZE)
 		{
 			createChild(child);

@@ -42,7 +42,7 @@ namespace Stone
         PublicSingleton<Engine>::getInstance().logicalInitialize();
         QtImGui::initialize(this);
         transformcomponent = new TransformComponent();
-        transformcomponent->Scale = { 0.1, 0.1, 0.1 };
+        //transformcomponent->Scale = { 0.1, 0.1, 0.1 };
 
         //PublicSingletonInstance(TerrainManager).getTerrain({ 0, 0,0 }, target, { 0, 0, 0 }, { 3600, 0, 3600 });
         
@@ -63,8 +63,8 @@ namespace Stone
 
         PublicSingleton<EditorCamera>::getInstance().bind();
         //LOG_INFO("Editor Camear pos: {0} {1} {2}", PublicSingleton<EditorCamera>::getInstance().m_Pos.x, PublicSingleton<EditorCamera>::getInstance().m_Pos.y, PublicSingleton<EditorCamera>::getInstance().m_Pos.z);
-        //PublicSingletonInstance(TerrainManager).getTerrain(PublicSingleton<EditorCamera>::getInstance().m_Pos, target, { 0, 0, 0 }, { 400, 0, 400 });
-        PublicSingletonInstance(TerrainManager).getTerrain(camerapos, target, { 0, 0, 0 }, { 400, 0, 400 });
+        PublicSingletonInstance(TerrainManager).getTerrain(PublicSingleton<EditorCamera>::getInstance().m_FocalPoint, target, { 0, 0, 0 }, { 400, 0, 400 });
+        //PublicSingletonInstance(TerrainManager).getTerrain(camerapos, target, { 0, 0, 0 }, { 400, 0, 400 });
         PublicSingletonInstance(GLobalLight).bind(1);
         PublicSingletonInstance(MaterialPool).getMaterial("BasicMaterial")->bind(2);
         //PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();

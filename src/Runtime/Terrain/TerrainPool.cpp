@@ -6,7 +6,6 @@ namespace Stone
 	{
 		char buffer[512];
 		sprintf(buffer, "<min<%f_%f>_max<%f_%f>>", node.bondsMin.x, node.bondsMin.z, node.bondsMax.x, node.bondsMax.z);
-		LOG_INFO(buffer);
 		if (m_TerrainPool.find(buffer) != m_TerrainPool.end())
 		{
 			target.push_back(m_TerrainPool[buffer]);
